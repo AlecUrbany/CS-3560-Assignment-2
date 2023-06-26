@@ -2,6 +2,7 @@ package DesignPattern;
 
 import java.util.*;
 
+//Our composite design pattern. Is used in User and UserGroup.
 public abstract class ManagerUser
 {
     protected String id;

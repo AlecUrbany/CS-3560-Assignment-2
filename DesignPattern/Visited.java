@@ -2,8 +2,8 @@ package DesignPattern;
 
 import javax.swing.JOptionPane;
 
-import A2.Twitter.UserGroup;
-import A2.Twitter.User;
+import Assignment2.Twitter.User;
+import Assignment2.Twitter.UserGroup;
 
 public class Visited implements Visitor
 {

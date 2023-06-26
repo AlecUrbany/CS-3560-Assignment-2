@@ -1,17 +1,18 @@
-package A2.Twitter;
-
+package Assignment2.Twitter;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
-
 import DesignPattern.Visitor;
 
+//This class implements the Visitor interface, and will calculate whether or not a tweet is positive.
 public class PosVisitor implements Visitor
 {
+    //This is to make sure groups are visited
     @Override
     public void visit(UserGroup group) {}
 
+    
     @Override
     public void print(String Msg)
     {

@@ -1,4 +1,4 @@
-package A2.Twitter;
+package Assignment2.Twitter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -10,11 +10,14 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import DesignPattern.UserView;
-import DesignPattern.VisitUser;
+import DesignPattern.VisitMessage;
 import DesignPattern.Visited;
 
+//This class acts as the centralized panel for doing everything. Such as creating accounts and groups, as well as managing them and checking analytics.
+//This would be the Singleton Design Pattern
 public class AdminControlPanel extends javax.swing.JFrame implements TreeSelectionListener 
 {
+    //Starts a new instance of the control panel.
     private static AdminControlPanel instance = new AdminControlPanel();
 
     public static AdminControlPanel getInstance() 
@@ -22,34 +25,48 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
         return instance;
     }
 
+    //Setting up the tree which will store our users and groups.
     private javax.swing.JTree tree;
     private javax.swing.JPanel treeView;
     private UserGroup root;
     private User current;
     private UserGroup currentGroup;
 
+    //Giving the window the option to scroll as well as create options for users and groups.
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JPanel userOptions, groupOptions;
 
+    //Allowing the user to input names for groups and users.
     private JTextField userName, groupName;
 
+    //Setting up buttons.
 	private JButton openUserView, showUserTotal, showGroupTotal, showPosPercent, showMsgTotal;
     
+    //Constructor for the control panel.
     private AdminControlPanel() 
     {
+        //This is the starting point of our tree. There is nothing inside.
         root = new UserGroup("Root");
-        initComponents();
+        initializeComponents();
         current = null;
     }
 
-    private void initComponents() 
+    private void initializeComponents() 
     {
+        //Terminates the program
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        //Name of the window
         setTitle("Mini Twitter: Admin Control Panel");
+        
+        //We do NOT need users to resize the perfectly constructed window.
         setResizable(false);
 
+        //Setting up text fields and buttons for users and groups.
         userOptions = new javax.swing.JPanel();
         groupOptions = new javax.swing.JPanel();
+
+        //Sets up the panel for our user/group list, starting with our root node.
         treeView = new javax.swing.JPanel();
         scrollPane = new javax.swing.JScrollPane();
         tree = new javax.swing.JTree();
@@ -333,7 +350,7 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 
     private void messageTotalActionPerformed(java.awt.event.ActionEvent event)
     {
-        VisitUser messagevisit = new VisitUser();
+        VisitMessage messagevisit = new VisitMessage();
         if (current != null) {
             current.accept(messagevisit);
         }

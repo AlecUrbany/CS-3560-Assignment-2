@@ -3,7 +3,7 @@ package DesignPattern;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
-import A2.Twitter.User;
+import Assignment2.Twitter.User;
 
 public class UserView extends javax.swing.JPanel implements Observer
 {

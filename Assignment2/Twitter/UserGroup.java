@@ -1,4 +1,4 @@
-package A2.Twitter;
+package Assignment2.Twitter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,5 @@
 package DesignPattern;
+//Setting up the observer interface. Used in UserView and Feed.
 public interface Observer
 {
     public void print(String print);

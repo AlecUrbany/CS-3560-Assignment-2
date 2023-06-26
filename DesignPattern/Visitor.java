@@ -1,8 +1,10 @@
 package DesignPattern;
 
-import A2.Twitter.UserGroup;
-import A2.Twitter.User;
+import Assignment2.Twitter.User;
+import Assignment2.Twitter.UserGroup;
 
+//Setting up the Visitor interface. This establishes the functions without defining them.
+//This would be the Visitor design pattern.
 public interface Visitor
 {
     public void visit(User user);
