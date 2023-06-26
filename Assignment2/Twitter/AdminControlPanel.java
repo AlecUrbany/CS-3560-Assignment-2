@@ -71,6 +71,7 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
         scrollPane = new javax.swing.JScrollPane();
         tree = new javax.swing.JTree();
 
+        //
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         tree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         treeNode1 = new DefaultMutableTreeNode(root);

@@ -1,5 +1,6 @@
 package Assignment2.Twitter;
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
@@ -19,6 +20,7 @@ public class PosVisitor implements Visitor
         System.out.println(Msg);
     }
 
+    //Our function to check for positivity in tweets.
     @Override
     public void visit(User user)
     {
@@ -41,6 +43,9 @@ public class PosVisitor implements Visitor
                 count += str.split(" ").length;
             }
         }
-        JOptionPane.showMessageDialog(null, "Positive Percentage: " + (countTotal/count)*100 + "%");
+        //Displays how many tweets are positive. Will round to the nearest hundredth.
+        Double positivePercent = (countTotal/count)*100.00;
+        DecimalFormat df_obj = new DecimalFormat("###.##");
+        JOptionPane.showMessageDialog(null, "Positive Percentage: " + df_obj.format(positivePercent) + "%");
     }
 }
