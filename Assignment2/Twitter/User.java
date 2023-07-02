@@ -1,7 +1,6 @@
 package Assignment2.Twitter;
 
 import java.util.*;
-import java.util.HashMap;
 
 import DesignPattern.ManagerUser;
 import DesignPattern.Observer;
@@ -11,147 +10,159 @@ import DesignPattern.Visitor;
 //Our user class. Is an extension of the User Manager.
 public class User extends ManagerUser implements Subject
 {
-    //HashMap to keep track of users
-    private static HashMap<String, User> users = new HashMap<String, User>();
-    //Feed for the user to view
-    private Feed newsfeed;
-    //Group the user is in.
-    private String group;
-    //List of followers, followings, and tweets posted.
-    private ArrayList<String> following;
-    private ArrayList<String> tweets;
-    private ArrayList<Observer> followers;
+	//HashMap to keep track of users
+	private static HashMap<String, User> users = new HashMap<String, User>();
+	//Feed for the user to view
+	private Feed newsfeed;
+	//Group the user is in.
+	private String group;
+	//Creation time checker for user
+	private Long creationTime;
+	//Timestamp for last tweet
+	private Long lastUpdateTime;
+	//List of followers, followings, and tweets posted.
+	private ArrayList<String> following;
+	private ArrayList<String> tweets;
+	private ArrayList<Observer> followers;
 
-    //Getters to show up to date feed, the group the user is in, as well as tweets.
-    public Feed getFeed()
-    {
-        return newsfeed;
-    }
 
-    public String getGroup()
-    {
-        return group;
-    }
 
-    public ArrayList<String> getTweets()
-    {
-        return tweets;
-    }
+	//Getters to show up to date feed, the group the user is in, time, as well as tweets.
+	public Long getTime()
+	{
+		return creationTime;
+	}
 
-    //Error to be thrown if there is an unsupported operation.
-    @Override
-    public Object getUpdate(Observer obj)
-    {
-        throw new UnsupportedOperationException("");
-    }
+	public Feed getFeed()
+	{
+		return newsfeed;
+	}
 
-    //Gets the amount of users.
-    public Collection getUsers()
-    {
-        return users.values();
-    }
+	public String getGroup()
+	{
+		return group;
+	}
 
-    //Checks to see if a user already exists.
-    public static boolean exists(String uid)
-    {
-        return users.containsKey(uid);
-    }
+	public ArrayList<String> getTweets()
+	{
+		return tweets;
+	}
 
-    //Adds a user to the current user's following list.
-    public void follow(String id)
-    {
-        users.get(id).register(newsfeed);
-        following.add(id);
-        for (String s : users.get(id).getTweets())
-        {
-            newsfeed.update(s, users.get(id));
-        }
-    }
+	//Error to be thrown if there is an unsupported operation.
+	@Override
+	public Object getUpdate(Observer obj)
+	{
+		throw new UnsupportedOperationException("");
+	}
 
-    //Allows user to join group.
-    public void joinGroup(String id)
-    {
-        group = id;
-    }
+	//Gets the amount of users.
+	public Collection getUsers()
+	{
+		return users.values();
+	}
 
-    //Allows the user to tweet. Will display the tweet to the user.
-    public void tweet(String msg)
-    {
-        tweets.add(msg);
-        notifyUser();
-    }
+	//Checks to see if a user already exists.
+	public static boolean exists(String uid)
+	{
+		return users.containsKey(uid);
+	}
 
-    
-    @Override
-    public void register(Observer obj)
-    {
-        if (obj == null) {
-            System.out.println("Null observer");
-        }
-        if (!followers.contains(obj))
-        {
-            followers.add(obj);
-        }
-    }
+	//Adds a user to the current user's following list.
+	public void follow(String id)
+	{
+		users.get(id).register(newsfeed);
+		following.add(id);
+		for (String s : users.get(id).getTweets())
+		{
+		newsfeed.update(s, users.get(id));
+		}
+	}
 
-    //Notifies the user of tweets from the list of users being followed.
-    @Override
-    public void notifyUser()
-    {
-        //This for loop will obtain tweets from every account the user follows.
-        for (Observer obs : followers)
-        {
-            obs.update(tweets.get(tweets.size() - 1), this);
-        }
-    }
+	//Allows user to join group.
+	public void joinGroup(String id)
+	{
+		group = id;
+	}
 
-    //Shows who is currently followed by the user.
-    public boolean isFollowing(String id)
-    {
-        return following.contains(id);
-    }
+	//Allows the user to tweet. Will display the tweet to the user.
+	public void tweet(String msg)
+	{
+		tweets.add(msg);
+		notifyUser();
+	}
 
-    @Override
-    public void add(ManagerUser um)
-    {
-        System.out.println("Can't add to leaf.");
-    }
+	
+	@Override
+	public void register(Observer obj)
+	{
+		if (obj == null) {
+		System.out.println("Null observer");
+		}
+		if (!followers.contains(obj))
+		{
+		followers.add(obj);
+		}
+	}
 
-    @Override
-    public ArrayList<ManagerUser> getMembers()
-    {
-        return null;
-    }
+	//Notifies the user of tweets from the list of users being followed.
+	@Override
+	public void notifyUser()
+	{
+		//This for loop will obtain tweets from every account the user follows.
+		for (Observer obs : followers)
+		{
+		obs.update(tweets.get(tweets.size() - 1), this);
+		}
+	}
 
-    public ArrayList<String> getFollowing()
-    {
-        return following;
-    }
+	//Shows who is currently followed by the user.
+	public boolean isFollowing(String id)
+	{
+		return following.contains(id);
+	}
 
-    public void setMembers() {}
+	@Override
+	public void add(ManagerUser um)
+	{
+		System.out.println("Can't add to leaf.");
+	}
 
-    public void setFollowing() {}
+	@Override
+	public ArrayList<ManagerUser> getMembers()
+	{
+		return null;
+	}
 
-    @Override
-    public void accept(Visitor visit) 
-    {
-        visit.visit(this);
-    }
+	public ArrayList<String> getFollowing()
+	{
+		return following;
+	}
 
-    //Sets up what exactly a user is.
-    public User(String id, String group)
-    {
-        
-        if (!users.containsKey(id))
-        {
-            this.id = id;
-            followers = new ArrayList<Observer>();
-            following = new ArrayList<String>();
-            tweets = new ArrayList<String>();
-            this.group = group;
-            newsfeed = new Feed();
-            this.register(newsfeed);
-            users.put(id, this);
-        }
-    }
+	public void setMembers() {}
+
+	public void setFollowing() {}
+
+	@Override
+	public void accept(Visitor visit) 
+	{
+		visit.visit(this);
+	}
+
+	//Sets up what exactly a user is.
+	public User(String id, String group)
+	{
+		
+		if (!users.containsKey(id))
+		{
+		this.id = id;
+		followers = new ArrayList<Observer>();
+		following = new ArrayList<String>();
+		tweets = new ArrayList<String>();
+		this.group = group;
+		newsfeed = new Feed();
+		this.register(newsfeed);
+		users.put(id, this);
+		this.creationTime = System.currentTimeMillis();
+		}
+	}
 }

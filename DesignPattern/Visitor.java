@@ -7,9 +7,9 @@ import Assignment2.Twitter.UserGroup;
 //This would be the Visitor design pattern.
 public interface Visitor
 {
-    public void visit(User user);
-    public void print(String testMessage); 
-    public void visit(UserGroup group);
+	public void visit(User user);
+	public void print(String testMessage); 
+	public void visit(UserGroup group);
 }
 
     
