@@ -122,6 +122,7 @@ public class User extends ManagerUser implements Subject
 		return following.contains(id);
 	}
 
+	//Adds users
 	@Override
 	public void add(ManagerUser um)
 	{

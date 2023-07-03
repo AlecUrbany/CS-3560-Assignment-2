@@ -13,6 +13,7 @@ import DesignPattern.UserView;
 import DesignPattern.VisitID;
 import DesignPattern.VisitMessage;
 import DesignPattern.Visited;
+import Assignment2.Twitter.User;
 
 //This class acts as the centralized panel for doing everything. Such as creating accounts and groups, as well as managing them and checking analytics.
 //This would be the Singleton Design Pattern
@@ -105,23 +106,23 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		});
 		
 		userName = new JTextField();
-			JButton addUser = new JButton("Add User");
+		JButton addUser = new JButton("Add User");
 		addUser.addActionListener(new java.awt.event.ActionListener() 
 		{
-		public void actionPerformed(java.awt.event.ActionEvent event) 
-		{
-			addUserActionPerformed(event);
-		}
+			public void actionPerformed(java.awt.event.ActionEvent event) 
+			{
+				addUserActionPerformed(event);
+			}
 		});
 				
 		groupName = new JTextField();
 		JButton addGroup = new JButton("Add Group");
 		addGroup.addActionListener(new java.awt.event.ActionListener()
 		{
-		public void actionPerformed(java.awt.event.ActionEvent event) 
-		{
-			addGroupActionPerformed(event);
-		}
+			public void actionPerformed(java.awt.event.ActionEvent event) 
+			{
+				addGroupActionPerformed(event);
+			}
 		});
 
 		openUserView = new JButton("Open User View");
@@ -292,21 +293,22 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 	{
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
-		if (node == null) {
-		return;
+		if (node == null) 
+		{
+			return;
 		}
 
 		Object info = node.getUserObject();
 
 		if (node.getUserObject().getClass().equals(User.class))
 		{
-		current = (User) info;
-		currentGroup = UserGroup.findGroup(current.getGroup());
+			current = (User) info;
+			currentGroup = UserGroup.findGroup(current.getGroup());
 		}
 		else
 		{
-		current = null;
-		currentGroup = (UserGroup) info;
+			current = null;
+			currentGroup = (UserGroup) info;
 		}
 	}
 
@@ -328,21 +330,24 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		String id = this.userName.getText();
 		if (currentGroup == null)
 		{
-		currentGroup = UserGroup.findGroup("Root");
+			currentGroup = UserGroup.findGroup("Root");
 		}
+
 		if (!User.exists(id))
 		{
-		User temp = new User(id, currentGroup.getUserID());
-		if (current == null)
-		{
-			current = temp;
-		}
-		currentGroup.add(temp);
-		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		model.insertNodeInto(new DefaultMutableTreeNode(temp), this.getCurrentGroup(),
-			this.getCurrentGroup().getChildCount());
+			User temp = new User(id, currentGroup.getUserID());
+			if (current == null)
+			{
+				current = temp;
+			}
 
-		} else  
+			currentGroup.add(temp);
+			DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+			model.insertNodeInto(new DefaultMutableTreeNode(temp), this.getCurrentGroup(),
+				this.getCurrentGroup().getChildCount());
+		}
+		
+		else  
 		{
 			JOptionPane.showMessageDialog(null, "Username ID " + id + " already exists");
 		}
@@ -353,15 +358,15 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		String id = this.groupName.getText();
 		if (currentGroup == null)
 		{
-		currentGroup = UserGroup.findGroup("Root");
+			currentGroup = UserGroup.findGroup("Root");
 		}
 		if (!UserGroup.exists(id))
 		{
-		UserGroup temp = new UserGroup(id);
-		currentGroup.add(temp);
-		DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-		model.insertNodeInto(new DefaultMutableTreeNode(temp), this.getCurrentGroup(),
-			this.getCurrentGroup().getChildCount());
+			UserGroup temp = new UserGroup(id);
+			currentGroup.add(temp);
+			DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+			model.insertNodeInto(new DefaultMutableTreeNode(temp), this.getCurrentGroup(),
+				this.getCurrentGroup().getChildCount());
 		}
 	}
 
@@ -373,8 +378,9 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 	private void userTotalActionPerformed(java.awt.event.ActionEvent event)
 	{
 		Visited uservisit = new Visited();
-		if (current != null) {
-		current.accept(uservisit);
+		if (current != null) 
+		{
+			current.accept(uservisit);
 		}
 	}
 
@@ -401,12 +407,12 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		VisitID verifyID = new VisitID();
 		if (current != null)
 		{
-		current.accept(verifyID);
+			current.accept(verifyID);
 		}
 	}
 
 	private void lastUpdatedActionPerformed(java.awt.event.ActionEvent event)
 	{
-		JOptionPane.showMessageDialog(null, "Last Updated User: " + current);
+		JOptionPane.showMessageDialog(null, "Last Updated User: " + this.userName.getText());
 	}
 }
