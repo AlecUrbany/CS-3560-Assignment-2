@@ -19,6 +19,8 @@ import Assignment2.Twitter.User;
 //This would be the Singleton Design Pattern
 public class AdminControlPanel extends javax.swing.JFrame implements TreeSelectionListener 
 {
+	//This stores the most recently created user
+	String id;
 	//Starts a new instance of the control panel.
 	private static AdminControlPanel instance = new AdminControlPanel();
 
@@ -327,7 +329,7 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 
 	private void addUserActionPerformed(java.awt.event.ActionEvent event)
 	{
-		String id = this.userName.getText();
+		id = this.userName.getText();
 		if (currentGroup == null)
 		{
 			currentGroup = UserGroup.findGroup("Root");
@@ -413,6 +415,6 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 
 	private void lastUpdatedActionPerformed(java.awt.event.ActionEvent event)
 	{
-		JOptionPane.showMessageDialog(null, "Last Updated User: " + this.userName.getText());
+		JOptionPane.showMessageDialog(null, "Last Updated User: " + id);
 	}
 }
