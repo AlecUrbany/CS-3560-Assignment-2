@@ -1,5 +1,10 @@
 package DesignPattern;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -8,6 +13,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.JOptionPane;
 import Assignment2.Twitter.User;
 import Assignment2.Twitter.UserGroup;
+import Assignment2.Twitter.Feed;
 
 public class UserView extends javax.swing.JPanel implements Observer
 {
@@ -16,7 +22,7 @@ public class UserView extends javax.swing.JPanel implements Observer
 	private javax.swing.JButton followButton, tweetButton;
 	private javax.swing.JTextField followName, tweetInput;
 	private javax.swing.JList following, newsFeed;
-	private javax.swing.JPanel followPanel, followingPanel, tweetPanel, feedPanel;
+	private javax.swing.JPanel timePanel, followPanel, followingPanel, tweetPanel, feedPanel;
 	private javax.swing.JScrollPane followingScrollPane, feedScrollPane;
 
 	public UserView(User user)
@@ -29,21 +35,13 @@ public class UserView extends javax.swing.JPanel implements Observer
 	@SuppressWarnings("unchecked")
 	private void start()
 	{
-
-		JButton creationTime = new JButton("User Creation Time");
-		creationTime.addActionListener(new java.awt.event.ActionListener() 
-		{
-			public void actionPerformed(java.awt.event.ActionEvent evt) 
-			{
-				creationTimeActionPerformed(evt);
-			}
-		});
-
 		followName = new javax.swing.JTextField();
 		tweetInput = new javax.swing.JTextField();
 
 		following = new javax.swing.JList();
 		newsFeed = new javax.swing.JList();
+
+		timePanel = new javax.swing.JPanel();
 
 		followPanel = new javax.swing.JPanel();
 		followingPanel = new javax.swing.JPanel();
@@ -53,6 +51,34 @@ public class UserView extends javax.swing.JPanel implements Observer
 		feedPanel = new javax.swing.JPanel();
 		feedScrollPane = new javax.swing.JScrollPane();
 		
+		JButton creationTime = new JButton("User Creation Time");
+		creationTime.addActionListener(new java.awt.event.ActionListener() 
+		{
+			public void actionPerformed(java.awt.event.ActionEvent evt) 
+			{
+				creationTimeActionPerformed(evt);
+			}
+		});
+
+
+		javax.swing.GroupLayout timeLayout = new javax.swing.GroupLayout(timePanel);
+		timePanel.setLayout(timeLayout);
+		timeLayout.setHorizontalGroup(
+			timeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timeLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(creationTime, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
+						javax.swing.GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+					.addContainerGap()));
+		timeLayout.setVerticalGroup(
+			timeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(timeLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(timeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addComponent(creationTime, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+					.addContainerGap()));
+
 		followButton = new javax.swing.JButton("Follow User");
 		followButton.addActionListener(new java.awt.event.ActionListener()
 		{
@@ -61,7 +87,7 @@ public class UserView extends javax.swing.JPanel implements Observer
 				followBtnActionPerformed(evt);
 			}
 		});
-
+		
 		javax.swing.GroupLayout followLayout = new javax.swing.GroupLayout(followPanel);
 		followPanel.setLayout(followLayout);
 		followLayout.setHorizontalGroup(
@@ -97,7 +123,6 @@ public class UserView extends javax.swing.JPanel implements Observer
 				.addGroup(followingLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(followingScrollPane)
-				.addComponent(creationTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addContainerGap()));
 		followingLayout.setVerticalGroup(
 			followingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,7 +130,6 @@ public class UserView extends javax.swing.JPanel implements Observer
 					.addContainerGap()
 					.addComponent(followingScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150,
 						javax.swing.GroupLayout.PREFERRED_SIZE)
-					.addComponent(creationTime, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		tweetButton = new javax.swing.JButton("Post Tweet");
@@ -140,9 +164,7 @@ public class UserView extends javax.swing.JPanel implements Observer
 
 		feedPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("News Feed: "));
 
-		newsFeed.setModel(new javax.swing.DefaultListModel()
-		{
-		});
+		newsFeed.setModel(new javax.swing.DefaultListModel(){});
 		updateFeed();
 		feedScrollPane.setViewportView(newsFeed);
 
@@ -162,6 +184,8 @@ public class UserView extends javax.swing.JPanel implements Observer
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addComponent(timePanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+							javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(followPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
 							javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(followingPanel, javax.swing.GroupLayout.Alignment.TRAILING,
@@ -176,6 +200,8 @@ public class UserView extends javax.swing.JPanel implements Observer
 			layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
 					.addContainerGap()
+					.addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+						javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 					.addComponent(followPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 						javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -200,16 +226,18 @@ public class UserView extends javax.swing.JPanel implements Observer
 		}
 	}
 
-
 	private void creationTimeActionPerformed(java.awt.event.ActionEvent event)
 	{
 		Long time = this.current.getTime();
-		JOptionPane.showMessageDialog(null, "User Created At:\n" + time + " nanoseconds");
+		//Converting milliseconds to a readable date
+		Date currentDate = new Date(time);
+		JOptionPane.showMessageDialog(null, "User Created At:\n" + currentDate);
 	}
 
 	private void tweetBtnActionPerformed(java.awt.event.ActionEvent evt)
 	{
 		current.tweet(tweetInput.getText());
+		//update user's time here
 	}
 
 	private void updateFollowing()

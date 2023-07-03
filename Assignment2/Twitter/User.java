@@ -74,7 +74,7 @@ public class User extends ManagerUser implements Subject
 		following.add(id);
 		for (String s : users.get(id).getTweets())
 		{
-		newsfeed.update(s, users.get(id));
+			newsfeed.update(s, users.get(id));
 		}
 	}
 
@@ -95,12 +95,13 @@ public class User extends ManagerUser implements Subject
 	@Override
 	public void register(Observer obj)
 	{
-		if (obj == null) {
-		System.out.println("Null observer");
+		if (obj == null) 
+		{
+			System.out.println("Null observer");
 		}
 		if (!followers.contains(obj))
 		{
-		followers.add(obj);
+			followers.add(obj);
 		}
 	}
 
@@ -111,7 +112,7 @@ public class User extends ManagerUser implements Subject
 		//This for loop will obtain tweets from every account the user follows.
 		for (Observer obs : followers)
 		{
-		obs.update(tweets.get(tweets.size() - 1), this);
+			obs.update(tweets.get(tweets.size() - 1), this);
 		}
 	}
 
@@ -142,6 +143,22 @@ public class User extends ManagerUser implements Subject
 
 	public void setFollowing() {}
 
+	public boolean checkUserID(User use) 
+	{
+       		for (int i = 0; i < users.size(); i++) {}
+        		return true; 
+    	}
+
+	public long getLastUpdateTime() 
+	{
+		return lastUpdateTime; 
+    	}
+
+	public void setLastUpdateTime(long updateTime) 
+	{
+		this.lastUpdateTime = updateTime; 
+	}
+
 	@Override
 	public void accept(Visitor visit) 
 	{
@@ -151,18 +168,17 @@ public class User extends ManagerUser implements Subject
 	//Sets up what exactly a user is.
 	public User(String id, String group)
 	{
-		
 		if (!users.containsKey(id))
 		{
-		this.id = id;
-		followers = new ArrayList<Observer>();
-		following = new ArrayList<String>();
-		tweets = new ArrayList<String>();
-		this.group = group;
-		newsfeed = new Feed();
-		this.register(newsfeed);
-		users.put(id, this);
-		this.creationTime = System.currentTimeMillis();
-		}
+			this.id = id;
+			followers = new ArrayList<Observer>();
+			following = new ArrayList<String>();
+			tweets = new ArrayList<String>();
+			this.group = group;
+			newsfeed = new Feed();
+			this.register(newsfeed);
+			users.put(id, this);
+			this.creationTime = System.currentTimeMillis();
+        		} 
 	}
 }

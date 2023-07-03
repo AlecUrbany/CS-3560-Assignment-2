@@ -1,12 +1,17 @@
 package Assignment2.Twitter;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import DesignPattern.Observer;
 import DesignPattern.Subject;
 
 //Class to display the user's feed.
 public class Feed implements Observer, Subject
 {
+	Date currentDate;
 	//Setting up the feed, as well as list of followers.
 	ArrayList<String> feed;
 	ArrayList<Observer> followers;
@@ -37,8 +42,11 @@ public class Feed implements Observer, Subject
 	@Override
 	public void update(String msg, Subject subject)
 	{
+		Long tweetTime = System.currentTimeMillis();
+		//Converting milliseconds to a readable date
+		currentDate = new Date(tweetTime);
 		User user = (User) subject;
-		feed.add(user.getUserID() + ": " + msg);
+		feed.add(user.getUserID() + ": " + msg + " | " + currentDate);
 		notifyUser();
 	}
 
@@ -53,11 +61,11 @@ public class Feed implements Observer, Subject
 	{
 		if (object == null)
 		{
-		System.out.println("Invalid");
+			System.out.println("Invalid");
 		}
 		if (!followers.contains(object))
 		{
-		followers.add(object);
+			followers.add(object);
 		}
 	}
 
@@ -67,7 +75,7 @@ public class Feed implements Observer, Subject
 	{
 		for (Observer observer : followers)
 		{
-		observer.update(null, this);
+			observer.update(null, this);
 		}
 	}
 
@@ -81,5 +89,10 @@ public class Feed implements Observer, Subject
 	public void makeMsgInNewsFeed()
 	{
 		return;
+	}
+
+	public Date getTweetDate()
+	{
+		return currentDate;
 	}
 }

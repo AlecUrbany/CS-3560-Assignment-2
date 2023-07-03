@@ -10,6 +10,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import DesignPattern.UserView;
+import DesignPattern.VisitID;
 import DesignPattern.VisitMessage;
 import DesignPattern.Visited;
 
@@ -40,7 +41,7 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 	private JTextField userName, groupName;
 
 	//Setting up buttons.
-		private JButton openUserView, showUserTotal, showGroupTotal, showPosPercent, showMsgTotal;
+		private JButton openUserView, showUserTotal, showGroupTotal, showPosPercent, showMsgTotal, isValid, lastUpdated;
 	
 	//Constructor for the control panel.
 	private AdminControlPanel() 
@@ -168,6 +169,15 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		}
 		});
 
+		lastUpdated= new JButton("Show Last Updated User");
+		lastUpdated.addActionListener(new java.awt.event.ActionListener()
+		{
+		public void actionPerformed(java.awt.event.ActionEvent event)
+		{
+			lastUpdatedActionPerformed(event);
+		}
+		});
+
 		javax.swing.GroupLayout userLayout = new javax.swing.GroupLayout(userOptions);
 		userOptions.setLayout(userLayout);
 		userLayout.setHorizontalGroup(
@@ -177,7 +187,7 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 			.addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
 			.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 			.addComponent(addUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-			.addComponent(userVerify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+			//.addComponent(userVerify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 			.addContainerGap())
 		);
 		userLayout.setVerticalGroup(
@@ -187,7 +197,7 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 			.addGroup(userLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 			.addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
 			.addComponent(addUser, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-			.addComponent(userVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+			//.addComponent(userVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
 			.addContainerGap(14, Short.MAX_VALUE))
 		);
 
@@ -227,12 +237,14 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 						.addComponent(openUserView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(layout.createSequentialGroup()
 							.addComponent(showUserTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-							.addComponent(showGroupTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+							.addComponent(showGroupTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        	.addComponent(lastUpdated, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
 						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
 							.createSequentialGroup()
 							.addComponent(showMsgTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-							.addComponent(showPosPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap()));
+							.addComponent(showPosPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+							.addComponent(userVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()));
 
 		layout.setVerticalGroup(
 			layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,16 +259,18 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 							.addGroup(layout
 								.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(showUserTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(showGroupTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addComponent(showGroupTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(lastUpdated, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
 							.addGap(1, 1, 1)
 							.addGroup(layout
 								.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(showMsgTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(showPosPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addGroup(layout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(treeView)))
-					.addContainerGap()));
+								.addComponent(showPosPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(userVerify, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(treeView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()));
 		pack();
 	}
 
@@ -296,14 +310,6 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		}
 	}
 
-	//Action performed section
-	private void userVerifyActionPerformed(java.awt.event.ActionEvent event)
-	{
-		JOptionPane.showMessageDialog(null, "Users Verified. All names are good to go!");
-
-	}
-
-
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent event)
 	{
 		if (current != null)
@@ -336,6 +342,9 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		model.insertNodeInto(new DefaultMutableTreeNode(temp), this.getCurrentGroup(),
 			this.getCurrentGroup().getChildCount());
 
+		} else  
+		{
+			JOptionPane.showMessageDialog(null, "Username ID " + id + " already exists");
 		}
 	}
 
@@ -384,5 +393,20 @@ public class AdminControlPanel extends javax.swing.JFrame implements TreeSelecti
 		{
 		current.accept(positivevisit);
 		}
+	}
+
+	//Action performed section
+	private void userVerifyActionPerformed(java.awt.event.ActionEvent event)
+	{
+		VisitID verifyID = new VisitID();
+		if (current != null)
+		{
+		current.accept(verifyID);
+		}
+	}
+
+	private void lastUpdatedActionPerformed(java.awt.event.ActionEvent event)
+	{
+		JOptionPane.showMessageDialog(null, "Last Updated User: " + current);
 	}
 }
